@@ -58,13 +58,21 @@ Want more? Shoot me feedback.
 ### 💼 How it works
 ---
 
+#### Billing Alerts
+
 For billing alerts, `aws-accountant` provisions CloudWatch alarms which monitor the [`EstimatedCharges`](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/monitor_estimated_charges_with_cloudwatch.html) metric for your account. You are able to specify multiple thresholds and get alerts each time one is reached.
+
+#### Egress Alerts
 
 For egress alerts, `aws-accountant` provisions a CloudWatch alarm which monitors the [`NetworkOut`](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/viewing_metrics_with_cloudwatch.html) metric for your EC2 instances. You can specific specific instance ids, or have `aws-accountant` query your account for all instances and configure alerts for each. 
 
+> **For Egress Alerts** - `aws-accountant` will query for AWS instances that are tagged with `MonitorEgress = true`. If no instances are found, Terraform apply will fail.
+
+#### Notifications
+
 In order to recieve alerts, `cloud-accountant` will provision an SNS topic for both types of alarm. It will then subscribe your phone number (to recieve SMS) and you email address (to recieve emails) to the SNS topic. 
 
-## 📋 License 
+## 📋 License s
 --- 
 
 Apache 2 Licensed. See [LICENSE](./LICENSE) for full details.

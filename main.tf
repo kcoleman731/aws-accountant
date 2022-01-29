@@ -55,7 +55,7 @@ resource "aws_cloudwatch_metric_alarm" "estimated_charges_alarm" {
 // Network Egress SNS Topic & Subcription
 //-----------------------------------------------------------------------------
 
-resource "aws_sns_topic" "network_egress_alarm_tsopic" {
+resource "aws_sns_topic" "network_egress_alarm_topic" {
   name = "estimated-charges-alarm-topic"
 }
 
@@ -76,8 +76,10 @@ resource "aws_sns_topic_subscription" "network_egress_alarm_sns_subscription" {
 //-----------------------------------------------------------------------------
 
 data "aws_instances" "running_instances" {
-  instance_tags = {
-    EgressMonitored = "True"
+  count = var.egress_threshold == null ? 0 : 1
+  filter {
+    name   = "tag:MonitorEgress"
+    values = ["true"]
   }
 }
 

@@ -1,9 +1,9 @@
 module "aws-accountant" {
-  source = "git@github.com:kcoleman731/aws-accountant.git"
+  source = "../"
 
-  email            = "cloud@accountant.com"
-  phone_number     = "+4445556666"
-  egress_threshold = 300
+  email        = "cloud@accountant.com"
+  phone_number = "+4445556666"
+  # egress_threshold = 300 // Ensure instances are tagged with `MonitorEgress:true`.
   charge_thresholds = [
     {
       name      = "Ten"

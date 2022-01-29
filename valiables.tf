@@ -19,4 +19,5 @@ variable "charge_thresholds" {
 variable "egress_threshold" {
   description = "Confiruation for NetworkOut alarms to monitor EC2 egress."
   type        = number
+  default     = null
 }
