@@ -16,13 +16,7 @@ variable "charge_alarms" {
   }))
 }
 
-variable "egress_alarms" {
+variable "egress_threshold" {
   description = "Confiruation for NetworkOut alarms to monitor EC2 egress."
-  type = list(object({
-    name          = string
-    threshold     = string
-    asg_name      = optional(string)
-    instance_id   = optional(string)
-    instance_type = optional(string)
-  }))
+  type        = number
 }

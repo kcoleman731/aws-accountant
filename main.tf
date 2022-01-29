@@ -77,21 +77,25 @@ resource "aws_sns_topic_subscription" "network_egress_alarm_sns_subscription" {
 // Network Egress Alarm
 //-----------------------------------------------------------------------------
 
+data "aws_instances" "running_instances" {
+  instance_tags = {
+    EgressMonitored = "True"
+  }
+}
+
 resource "aws_cloudwatch_metric_alarm" "asg_network_egress_alarm" {
-  for_each            = { for alarm in var.egress_alarms : alarm.asg => alarm }
-  alarm_name          = "${each.key}-egress-alarm"
+  for_each            = { for instance in data.aws_instances.running_instances : instance.arn => instance }
+  alarm_name          = "${each.value.arn}-egress-alarm"
   comparison_operator = "GreaterThanThreshold"
   evaluation_periods  = "1"
   metric_name         = "NetworkOut"
   namespace           = "AWS/EC2"
   period              = "300"
   statistic           = "Maximum"
-  threshold           = each.value.threshold
-  alarm_description   = "CloudWatch EC2 Alarm which triggers when Egress goes above ${each.value.threshold} GB for ${each.value.name}."
+  threshold           = var.egress_threshold
+  alarm_description   = "CloudWatch EC2 Alarm which triggers when Egress goes above ${var.egress_threshold} GB for ${each.value.id}."
   alarm_actions       = [aws_sns_topic.network_egress_alarm_topic.arn]
   dimensions = {
-    AutoScalingGroupName = each.value.asg_name
-    InstanceId           = each.value.instance_id
-    InstanceType         = each.value.instace_type
+    InstanceId = each.value.id
   }
 }

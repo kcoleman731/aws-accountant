@@ -1,0 +1,18 @@
+# Local VSCode settings.
+**/.vscode/** 
+
+# Local Terraform dir.
+**/.terraform/*
+
+# Terraform lockfile
+.terraform.lock.hcl
+
+# .Terraform var files
+*.tfvars
+
+# Terraform state files
+*.tfstate
+*.tfstate.*
+
+# DS store
+.DS_Store
