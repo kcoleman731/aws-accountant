@@ -1,4 +1,4 @@
-# AWS Accountant 
+# 👨‍💼🧮 AWS Accountant 
 
 `aws-accountant` is a dead simple Terraform module which helps you monitor your cloud spend. `cloud-accountant` can provision CloudWatch alarms to notify you when:
 
