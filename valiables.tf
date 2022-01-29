@@ -8,7 +8,7 @@ variable "email" {
   type        = string
 }
 
-variable "charge_alarms" {
+variable "charge_thresholds" {
   description = "Confiruation for EstimatedCharges alarms to monitor charges."
   type = list(object({
     name      = string

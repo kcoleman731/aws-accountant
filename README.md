@@ -25,8 +25,8 @@ module "aws-accountant" {
     email = "cloud@accountant.com"
     phone_number = "+4445556666"
 
-    # Billing Threshold Config
-    charge_alarms = [
+    # Charge threshold config.
+    charge_thresholds = [
         {
             name = "Ten"
             threshold = "10"
@@ -37,7 +37,7 @@ module "aws-accountant" {
         }
     ]
 
-    # Egress Threshold Config
+    # Egress threshold config.
     egress_threshold = 300
 }
 ```
@@ -56,6 +56,8 @@ Want more? Shoot me feedback.
 For billing alerts, `aws-accountant` provisions CloudWatch alarms which monitor the [`EstimatedCharges`](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/monitor_estimated_charges_with_cloudwatch.html) metric for your account. You are able to specify multiple thresholds and get alerts each time one is reached.
 
 For egress alerts, `aws-accountant` provisions a CloudWatch alarm which monitors the [`NetworkOut`](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/viewing_metrics_with_cloudwatch.html) metric for your EC2 instances. You can specific specific instance ids, or have `aws-accountant` query your account for all instances and configure alerts for each. 
+
+In order to recieve alerts, `cloud-accountant` will provision an SNS topic for both types of alarm. It will then subscribe your phone number (to recieve SMS) and you email address (to recieve emails) to the SNS topic. 
 
 ## 📋 License 
 

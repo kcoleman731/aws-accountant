@@ -4,7 +4,7 @@ module "aws-accountant" {
   email            = "cloud@accountant.com"
   phone_number     = "+4445556666"
   egress_threshold = 300
-  charge_alarms = [
+  charge_thresholds = [
     {
       name      = "Ten"
       threshold = "10"
