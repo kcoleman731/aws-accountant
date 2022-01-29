@@ -6,20 +6,23 @@
 2. Egress for your EC2 instances goes above certain thresholds. 
 
 ### 💪 Motivation
+---
 
 Suprise cloud bills are a reality for cloud engineers. AWS provides tools that allow you to configure billing alerts, but they are not enabled by default. `cloud-account` makes it dead simple to enable alerts. 
 
 See blog post for more context. 
 
 ### ✅ Prerequisites 
+---
 
 Before provision CloudWatch alarms, you must enable billing alerts via the AWS console. As far as I can tell, there is no way to do this programatically (CloudWatch team, looking at you 👀). Instructions for doing so can [be found here](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/monitor_estimated_charges_with_cloudwatch.html#turning_on_billing_metrics).
 
 ### 🎉 Usage 
+---
 
 ```hcl
 module "aws-accountant" {
-    source = "github.com/kcoleman731/cloud-accountant"
+    source = "git@github.com:kcoleman731/aws-accountant.git"
 
     # Where alerts should go.
     email = "cloud@accountant.com"
@@ -43,6 +46,7 @@ module "aws-accountant" {
 ```
 
 ### 📈 Metric Coverage 
+---
 
 | Sevice        | Metric            | Description                                                                               |
 |---------------|-------------------|-------------------------------------------------------------------------------------------|
@@ -52,6 +56,7 @@ module "aws-accountant" {
 Want more? Shoot me feedback.
 
 ### 💼 How it works
+---
 
 For billing alerts, `aws-accountant` provisions CloudWatch alarms which monitor the [`EstimatedCharges`](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/monitor_estimated_charges_with_cloudwatch.html) metric for your account. You are able to specify multiple thresholds and get alerts each time one is reached.
 
@@ -60,5 +65,6 @@ For egress alerts, `aws-accountant` provisions a CloudWatch alarm which monitors
 In order to recieve alerts, `cloud-accountant` will provision an SNS topic for both types of alarm. It will then subscribe your phone number (to recieve SMS) and you email address (to recieve emails) to the SNS topic. 
 
 ## 📋 License 
+--- 
 
 Apache 2 Licensed. See [LICENSE](./LICENSE) for full details.

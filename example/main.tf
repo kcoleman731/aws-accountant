@@ -1,5 +1,5 @@
 module "aws-accountant" {
-  source = "github.com/kcoleman731/cloud-accountant"
+  source = "git@github.com:kcoleman731/aws-accountant.git"
 
   email            = "cloud@accountant.com"
   phone_number     = "+4445556666"

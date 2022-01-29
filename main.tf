@@ -37,7 +37,7 @@ resource "aws_sns_topic_subscription" "estimated_charges_alarm_sns_subscription"
 //-----------------------------------------------------------------------------
 
 resource "aws_cloudwatch_metric_alarm" "estimated_charges_alarm" {
-  for_each            = { for alarm in var.charge_alarms : alarm.name => alarm }
+  for_each            = { for threshold in var.charge_thresholds : threshold.name => threshold }
   alarm_name          = each.key
   comparison_operator = "GreaterThanThreshold"
   evaluation_periods  = "1"
@@ -48,16 +48,14 @@ resource "aws_cloudwatch_metric_alarm" "estimated_charges_alarm" {
   threshold           = each.value.threshold
   alarm_description   = "CloudWatch Billing Alarm which triggers when your AWS bill goes above ${each.value.threshold} dollars."
   alarm_actions       = [aws_sns_topic.estimated_charges_alarm_topic.arn]
-  dimensions = {
-    Currency = "USD"
-  }
+  dimensions          = { Currency = "USD" }
 }
 
 //-----------------------------------------------------------------------------
 // Network Egress SNS Topic & Subcription
 //-----------------------------------------------------------------------------
 
-resource "aws_sns_topic" "network_egress_alarm_topic" {
+resource "aws_sns_topic" "network_egress_alarm_tsopic" {
   name = "estimated-charges-alarm-topic"
 }
 
